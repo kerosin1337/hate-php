@@ -11,19 +11,19 @@ $this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = $this->title;
 
 
-function changeRole($role, $userId)
+function changeStatus($status, $userId)
 {
-    $roles = [
+    $statuses = [
         0 => [
-            'Сделать администратором',
-            'makeadmin'
+            'Активировать',
+            'activate'
         ],
         1 => [
-            'Сделать пользователем',
-            'makeuser'
+            'Деактивировать',
+            'deactivate'
         ]
     ];
-    return Html::a($roles[$role][0], sprintf("user/%s/?id=%d", $roles[$role][1], $userId));
+    return Html::a($statuses[$status][0], sprintf("user/%s/?id=%d", $statuses[$status][1], $userId));
 }
 
 ?>
@@ -54,12 +54,8 @@ function changeRole($role, $userId)
             [
                 'format' => 'html',
                 'value' => function ($data) {
-                    switch ($data->is_active) {
-                        case 0:
-                            return Html::a('Активировать', 'user/activate/?id=' . $data->id);
-                        case 1:
-                            return Html::a('Деактивировать', 'user/deactivate/?id=' . $data->id);
-                    }
+
+                    return changeStatus($data->is_active, $data->id);
                 }
             ],
             [
@@ -71,7 +67,7 @@ function changeRole($role, $userId)
 //                        case 1:
 //                            return Html::a('Сделать пользователем', 'user/makeuser/?id=' . $data->id);
 //                    }
-                    return changeRole($data->role, $data->id);
+                    return changeStatus($data->role, $data->id);
                 }
             ],
             [

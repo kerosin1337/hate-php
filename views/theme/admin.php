@@ -8,14 +8,7 @@ use yii\grid\GridView;
 
 $this->title = 'Модерация тем';
 $this->params['breadcrumbs'][] = $this->title;
-function changeRole($status, $userId)
-{
-    $status = [
-        0 => 'Сделать администратором',
-        1 => 'Сделать пользователем'
-    ];
-    return Html::a($roles[$role], "user/makeuser/?id=$userId");
-}
+
 ?>
 <div class="theme-index">
     <h1><?= Html::encode($this->title) ?></h1>
