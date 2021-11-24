@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr/>
 
     <div class="form-register">
-        <?= $this->render('_form', [
+        <?= $this->render('regForm', [
             'model' => $model,
         ]) ?>
     </div>

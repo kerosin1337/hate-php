@@ -8,6 +8,14 @@ use yii\grid\GridView;
 
 $this->title = 'Модерация тем';
 $this->params['breadcrumbs'][] = $this->title;
+function changeRole($status, $userId)
+{
+    $status = [
+        0 => 'Сделать администратором',
+        1 => 'Сделать пользователем'
+    ];
+    return Html::a($roles[$role], "user/makeuser/?id=$userId");
+}
 ?>
 <div class="theme-index">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -18,15 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'Имя',
                 'format' => 'raw',
-                'value' => function($model){
-                    $result = '';
-                    if (isset($model->user->name)){
-                        $result .= $model->user->name . ' ';
-                    }
-                    if (isset($model->user->surname)){
-                        $result .= $model->user->surname . ' ';
-                    }
-                    return $result;
+                'value' => function ($model) {
+                    return $model->user->name . ' ' . $model->user->surname;
                 },
             ],
             'name',
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     switch ($data->status) {
                         case 1:
                             return Html::a('Одобрить', 'approve/?id=' . $data->id) . " | " .
-                            Html::a('Отклонить', 'reject/?id=' . $data->id);
+                                Html::a('Отклонить', 'reject/?id=' . $data->id);
                         case 2:
                             return Html::a('Отклонить', 'reject/?id=' . $data->id);
                         case 0:
@@ -51,8 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
-
             ['class' => 'yii\grid\ActionColumn'],
+        ],
+        'options' => [
+            'class' => 'shadow-lg rounded',
         ],
     ]); ?>
 

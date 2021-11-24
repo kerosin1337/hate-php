@@ -29,10 +29,10 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'KirochaQ&A',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-light bg-light fixed-top border',
+            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
     echo Nav::widget([
@@ -51,7 +51,7 @@ AppAsset::register($this);
             ], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()],
             ['label' => 'Личный кабинет', 'url' => ['/theme/index'], 'visible' => !Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Регистрация', 'url' => ['/user/create'], 'visible' => Yii::$app->user->isGuest]) : (''),
+            ['label' => 'Регистрация', 'url' => ['/user/register'], 'visible' => Yii::$app->user->isGuest]) : (''),
 
             Yii::$app->user->isGuest ? (
             ['label' => 'Вход', 'url' => ['/site/login']]
@@ -84,7 +84,6 @@ AppAsset::register($this);
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
         <p class="text-center">&copy; Eugene Kerov <?= date('Y') ?></p>
-        <!--        <p class="float-right">--><? //= Yii::powered() ?><!--</p>-->
     </div>
 </footer>
 

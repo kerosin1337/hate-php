@@ -64,7 +64,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => theme::find()->where(['status' => 2])->orderBy('date ASC'),
+            'query' => Theme::find()->where(['status' => 2])->orderBy('date ASC'),
         ]);
 
         return $this->render('index', [

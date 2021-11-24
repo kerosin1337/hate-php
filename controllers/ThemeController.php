@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\Answer;
-use app\models\theme;
+use app\models\Theme;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -68,7 +68,7 @@ class ThemeController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => theme::find()->where(['user_id' => \Yii::$app->user->identity->getId()])->orderBy('status ASC'),
+            'query' => Theme::find()->where(['user_id' => \Yii::$app->user->identity->getId()])->orderBy('status ASC'),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -89,7 +89,7 @@ class ThemeController extends Controller
     public function actionAdmin()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => theme::find()->orderBy('status ASC'),
+            'query' => Theme::find()->orderBy('status ASC'),
         ]);
 
         return $this->render('admin', [
@@ -105,13 +105,9 @@ class ThemeController extends Controller
      */
     public function actionView($id)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Answer::find()->where(['theme_id' => $id])->orderBy('date DESC')
-        ]);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -122,7 +118,7 @@ class ThemeController extends Controller
      */
     public function actionCreate()
     {
-        $model = new theme();
+        $model = new Theme();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -175,12 +171,12 @@ class ThemeController extends Controller
      * Finds the theme model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return theme the loaded model
+     * @return Theme the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = theme::findOne($id)) !== null) {
+        if (($model = Theme::findOne($id)) !== null) {
             return $model;
         }
 

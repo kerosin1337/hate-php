@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\theme */
+/* @var $model app\models\Theme */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Темы', 'url' => ['index']];
@@ -43,24 +43,25 @@ $this->params['breadcrumbs'][] = $this->title;
 /* @var $model app\models\Answer */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<div style="display:<?= Yii::$app->user->isGuest ? 'block':'none' ?>">
-    <p>Чтобы  оставлять комментарии, пожалуйста, <a href="http://yii2/site/login">авторизуйтесь</a> в системе.</p>
+<div style="display:<?= Yii::$app->user->isGuest ? 'block' : 'none' ?>">
+    <p>Чтобы оставлять комментарии, пожалуйста, <a href="http://yii2/site/login">авторизуйтесь</a> в системе.</p>
 </div>
 
-<div style="display:<?= !Yii::$app->user->isGuest && Yii::$app->user->identity->isActive() == 0 ? 'block':'none' ?>">
+<div style="display:<?= !Yii::$app->user->isGuest && Yii::$app->user->identity->isActive() == 0 ? 'block' : 'none' ?>">
     <p>Вы забанены.</p>
 </div>
 
-<div class="answer-form" style="display:<?= !Yii::$app->user->isGuest && Yii::$app->user->identity->isActive() != 0 ? 'block':'none' ?>">
+<div class="answer-form"
+     style="display:<?= !Yii::$app->user->isGuest && Yii::$app->user->identity->isActive() != 0 ? 'block' : 'none' ?>">
 
     <?php
-        $form = ActiveForm::begin(['action'=>'/answer/create']);
-        $answer = new Answer();
+    $form = ActiveForm::begin(['action' => '/answer/create']);
+    $answer = new Answer();
     ?>
 
     <?= $form->field($answer, 'text')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($answer, 'theme_id')->hiddenInput(['value'=>$model->id])->label(false) ?>
+    <?= $form->field($answer, 'theme_id')->hiddenInput(['value' => $model->id])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Ответить', ['class' => 'btn btn-success']) ?>

@@ -18,6 +18,9 @@ use yii\web\IdentityInterface;
  * @property int $is_active
  * @property int $role
  *
+ * @property array $activeToString
+ * @property array $roleToString
+ *
  * @property Answer $answer
  * @property Answer[] $answers
  */
@@ -70,6 +73,16 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
         ];
     }
+
+    private $activeToString = [
+        true => 'Активирован',
+        false => 'Деативирован'
+    ];
+
+    private $roleToString = [
+        0 => 'Пользователь',
+        1 => 'Администратор'
+    ];
 
     public function beforeSave($insert)
     {
@@ -140,17 +153,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getActiveUser()
     {
-        switch ($this->is_active) {
-            case 0:
-                return 'Деативирован';
-            case 1:
-                return 'Активирован';
-        }
+        return $this->activeToString[$this->is_active];
     }
 
     public function activate()
     {
-        if ($this->isAdmin()) {
+        if (Yii::$app->user->identity->isAdmin()) {
             $this->is_active = true;
             $this->save();
         }
@@ -158,7 +166,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function deactivate()
     {
-        if ($this->isAdmin()) {
+        if (Yii::$app->user->identity->isAdmin()) {
             $this->is_active = false;
             $this->save();
         }
@@ -166,17 +174,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getRoleUser()
     {
-        switch ($this->role) {
-            case 0:
-                return 'Пользователь';
-            case 1:
-                return 'Администратор';
-        }
+
+        return $this->roleToString[$this->role];
     }
 
     public function makeAdmin()
     {
-        if ($this->isAdmin()) {
+        if (Yii::$app->user->identity->isAdmin()) {
             $this->role = 1;
             $this->save();
         }
@@ -184,7 +188,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function makeUser()
     {
-        if ($this->isAdmin()) {
+        if (Yii::$app->user->identity->isAdmin()) {
             $this->role = 0;
             $this->save();
         }

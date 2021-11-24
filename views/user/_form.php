@@ -21,12 +21,9 @@ use yii\bootstrap4\Html;
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-success']) ?>
-
-        <a class="btn btn-primary" href="/site/login">Авторизация</a>
+        <?= Html::submitButton('Изменить', ['class' => 'btn btn-success']) ?>
     </div>
-</div>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

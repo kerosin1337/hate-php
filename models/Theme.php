@@ -14,6 +14,8 @@ use Yii;
  * @property string $date
  * @property int $user_id
  *
+ * @property array $statusToString
+ *
  * @property Answer[] $answers
  * @property User $user
  */
@@ -36,7 +38,7 @@ class Theme extends \yii\db\ActiveRecord
             [['name', 'text'], 'required'],
             [['text'], 'string'],
             [['name'], 'string', 'max' => 128],
-            [['user_id'], 'default', 'value'=>Yii::$app->user->getId()],
+            [['user_id'], 'default', 'value' => Yii::$app->user->getId()],
         ];
     }
 
@@ -54,6 +56,12 @@ class Theme extends \yii\db\ActiveRecord
             'user_id' => 'ID пользователя',
         ];
     }
+
+    private $statusToString = [
+        0 => 'Отклонена',
+        1 => 'Ожидание модерации',
+        2 => 'Одобрена'
+    ];
 
     /**
      * Gets query for [[Answers]].
@@ -77,17 +85,7 @@ class Theme extends \yii\db\ActiveRecord
 
     public function getStatusText()
     {
-        switch ($this->status) {
-            case 0:
-                return 'Отклонена';
-                break;
-            case 1:
-                return 'Ожидание модерации';
-                break;
-            case 2:
-                return 'Одобрена';
-                break;
-        }
+        return $this->statusToString[$this->status];
     }
 
     public function approve()

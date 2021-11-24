@@ -8,6 +8,7 @@ use yii\grid\GridView;
 
 $this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index">
 
@@ -34,6 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $data->getActiveUser();
             }],
             ['class' => 'yii\grid\ActionColumn'],
+        ],
+        'options' => [
+            'class' => 'shadow-lg rounded',
         ],
     ]); ?>
 

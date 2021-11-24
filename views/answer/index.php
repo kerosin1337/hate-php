@@ -31,6 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
+        'options' => [
+            'class' => 'shadow-lg rounded',
+        ],
     ]); ?>
 
 

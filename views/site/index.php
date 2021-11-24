@@ -31,5 +31,8 @@ $this->title = 'Главная страница';
                 return count($data->answers);
             }]
         ],
+        'options' => [
+            'class' => 'shadow-lg rounded',
+        ],
     ]); ?>
 </div>

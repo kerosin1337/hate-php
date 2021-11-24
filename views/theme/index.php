@@ -37,6 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view}',
             ],
         ],
+        'options' => [
+            'class' => 'shadow-lg rounded',
+        ],
     ]); ?>
 
 

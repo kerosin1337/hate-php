@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\user;
+use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -35,14 +35,14 @@ class UserController extends Controller
                     'rules' => [
                         [
                             'allow' => true,
-                            'actions' => ['create'],
+                            'actions' => ['register'],
                             'roles' => ['?'],
                         ],
                         [
                             'allow' => true,
-                            'actions' => ['index', 'update', 'admin', 'activate', 'deactivate', 'view', 'user', 'makeadmin', 'makeuser'],
+                            'actions' => ['index', 'create', 'update', 'admin', 'activate', 'deactivate', 'view', 'user', 'makeadmin', 'makeuser'],
                             'roles' => ['@'],
-                            'matchCallback' => function($rule, $action) {
+                            'matchCallback' => function ($rule, $action) {
                                 return Yii::$app->user->identity->isAdmin();
                             }
                         ],
@@ -59,7 +59,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => user::find(),
+            'query' => User::find(),
         ]);
 
         return $this->render('index', [
@@ -70,7 +70,7 @@ class UserController extends Controller
     public function actionAdmin()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => user::find(),
+            'query' => User::find(),
         ]);
 
         return $this->render('index', [
@@ -86,13 +86,8 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['user_id' => $id])->orderBy('date DESC')
-        ]);
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -101,9 +96,22 @@ class UserController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    public function actionRegister()
+    {
+        $model = new User();
+
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/site/login']);
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
+    }
+
     public function actionCreate()
     {
-        $model = new user();
+        $model = new User();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['/site/login']);
@@ -152,12 +160,12 @@ class UserController extends Controller
      * Finds the user model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return user the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = user::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 
